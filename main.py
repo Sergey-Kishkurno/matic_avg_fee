@@ -4,18 +4,13 @@ import time
 
 import logging
 
-
 from dao.sources.csv_local_file import save_file
 
-source_url = "https://polygongasstation.com/"
-data_url = "https://gasstation-mainnet.matic.network"
-
-# number of measurements, in times
-# >= 3 is a recommended value
-N_OF_MEASUREMENTS = 3
-
-# Time interval between measurements, in seconds
-TIME_DELTA = 3
+from setup.setup import (
+        data_url,
+        N_OF_MEASUREMENTS,
+        TIME_DELTA
+    )
 
 
 def _fetch_one_measurement(url):
