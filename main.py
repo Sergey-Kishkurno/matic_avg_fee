@@ -12,7 +12,10 @@ from setup.setup import (
         TIME_DELTA
     )
 
+from utils.utils import timing
 
+
+@timing
 def _fetch_one_measurement(url):
     res = {}
     try:
@@ -31,7 +34,8 @@ def fetch_data(url):
     is_keys_present = False
     res = {}
 
-    print(f"Current time, when fetching: {datetime.now()}")
+    # print(f"Current time, when fetching: {datetime.now()}")
+
     # Gathering the first measurement and init keys (according to CSV format):
     res = _fetch_one_measurement(url)
 
@@ -46,7 +50,7 @@ def fetch_data(url):
     for i in range(N_OF_MEASUREMENTS - 2):
 
         # TODO: Remove debug print
-        print(f"Current time, when fetching: {datetime.now()}")
+        # print(f"Current time, when fetching: {datetime.now()}")
 
         res = _fetch_one_measurement(url)
 
