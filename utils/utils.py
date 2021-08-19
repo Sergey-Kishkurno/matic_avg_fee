@@ -1,5 +1,6 @@
 from datetime import datetime
 from time import sleep
+from setup.setup import TIME_DELTA_DEFAULT
 
 
 # A decorator for timing in the time series
@@ -24,12 +25,10 @@ def timing(func):
 
 
 # A decorator for timing in the time series
-def sleeping(sleeping_timedelta = 5):
+def sleeping(sleeping_timedelta = TIME_DELTA_DEFAULT):
     """
     Timing decorator inserts the delay after function call
-    By default the delay = 5 seconds.
-
-    If it will be necessary, support for parameters can be added.
+    By default the delay is TIME_DELTA_DEFAULT seconds.
     """
     def actual_decorator(func):
         def wrapper(*args, **kwargs):

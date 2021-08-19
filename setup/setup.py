@@ -8,4 +8,5 @@ data_url = "https://gasstation-mainnet.matic.network"
 N_OF_MEASUREMENTS = 3
 
 # Time interval between measurements, in seconds
+TIME_DELTA_DEFAULT = 5
 TIME_DELTA = 2
