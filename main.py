@@ -1,6 +1,6 @@
 import requests
 from datetime import datetime, time, timedelta
-import time
+from time import sleep
 
 import logging
 
@@ -12,7 +12,14 @@ from setup.setup import (
         TIME_DELTA
     )
 
+from utils.utils import (
+        timing,
+        sleeping
+    )
 
+
+@timing
+@sleeping(TIME_DELTA)
 def _fetch_one_measurement(url):
     res = {}
     try:
@@ -28,41 +35,27 @@ def _fetch_one_measurement(url):
 
 def fetch_data(url):
     values_to_save = []
-    is_keys_present = False
-    res = {}
 
-    print(f"Current time, when fetching: {datetime.now()}")
     # Gathering the first measurement and init keys (according to CSV format):
     res = _fetch_one_measurement(url)
+    res.update({'Time': int(datetime.utcnow().timestamp())})
 
     values_to_save.append(res.keys())
     values_to_save.append(res.values())
-    # TODO: Remove debug print
-    print(values_to_save)
 
-    time.sleep(TIME_DELTA)
-
-    # Gathering the rest of the package of measurements
-    for i in range(N_OF_MEASUREMENTS - 2):
-
-        # TODO: Remove debug print
-        print(f"Current time, when fetching: {datetime.now()}")
+    # Gathering the rest of the package of measurements, only values
+    for i in range(N_OF_MEASUREMENTS - 1):
 
         res = _fetch_one_measurement(url)
+        res.update({'Time': int(datetime.utcnow().timestamp())})
 
         values_to_save.append(res.values())
-        # TODO: Remove debug print
-        print(values_to_save)
-
-        time.sleep(TIME_DELTA)
 
     # Saving to the persistence layer:
-    print(values_to_save)
     save_file(values_to_save)
 
 
 def main(*argc, **argv):
-    print("--- Starting fetching data... ----------------------------")
     fetch_data(data_url)
 
 
